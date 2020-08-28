@@ -1,8 +1,5 @@
 {
-  "dbpath" : "db",
-  "repos" : {
-    "Hound" : {
-      "url" : "https://github.com/etsy/hound.git"
-    }
-  }
+  "dbpath": "db",
+  "title": "YAML Hound",
+  "path": "."
 }
