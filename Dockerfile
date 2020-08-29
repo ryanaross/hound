@@ -11,10 +11,10 @@ RUN make
 FROM alpine:3.12.0
 
 COPY --from=hound-builder /go/bin/houndd /bin/houndd
-COPY default-config.json /data/config.json
+COPY default-config.json /config.json
 
 VOLUME ["/data"]
 
 EXPOSE 6080
 
-ENTRYPOINT ["/bin/houndd", "-conf", "/data/config.json"]
+ENTRYPOINT ["/bin/houndd", "-conf", "/config.json"]

@@ -350,6 +350,12 @@ func indexAllFiles(opt *IndexOptions, dst, src string) error {
 	}
 	defer fileHandle.Close()
 
+	if fi, err := os.Stat(src); err == nil && fi.Mode()|os.ModeSymlink != 0 {
+		if s, err := os.Readlink(src); err == nil {
+			src = s
+		}
+	}
+
 	if err := filepath.Walk(src, func(path string, info os.FileInfo, err error) error {
 		name := info.Name()
 		rel, err := filepath.Rel(src, path)
@@ -366,7 +372,15 @@ func indexAllFiles(opt *IndexOptions, dst, src string) error {
 			return nil
 		}
 
-		if opt.ExcludeDotFiles && name[0] == '.' {
+		// TODO: Only index YAML. Currently not working.
+		// if !strings.HasSuffix(name, ".yaml") && !strings.HasSuffix(name, ".yml") {
+		// 	if info.IsDir() {
+		// 		return filepath.SkipDir
+		// 	}
+		// 	return nil
+		// }
+
+		if name[0] == '.' {
 			if info.IsDir() {
 				return filepath.SkipDir
 			}

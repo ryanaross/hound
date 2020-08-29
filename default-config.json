@@ -1,5 +1,10 @@
 {
   "dbpath": "db",
   "title": "YAML Hound",
-  "path": "."
+  "repos": {
+    "FakeRepo": {
+      "url": "file:///data",
+      "vcs": "fake"
+    }
+  }
 }
